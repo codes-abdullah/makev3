@@ -37,7 +37,10 @@ CPPFLAGS ?= $(INCLUDE_DIR_FLAGS) -MMD -MP
 
 
 
-all: $(TARGET) | ECLIPSE_IDE_REQUIREMENTS
+all: $(TARGET) | FINALLY
+
+FINALLY: ECLIPSE_IDE_REQUIREMENTS
+	mv $(OBJ_DIR) $(BUILD_DIR)	
 
 #special impelementation, tested on eclipse Version: 2024-06 (4.32.0)
 #eclipse will be looking for 2 dirs for running and debugging the app
@@ -48,7 +51,7 @@ ECLIPSE_IDE_REQUIREMENTS:
 	mkdir -p $(BUILD_DIR)/default
 	cp $(TARGET) $(BUILD_DIR)/default
 	mv $(TARGET) $(BUILD_DIR)/make.debug.linux.x86_64
-	
+
 
 test:
 	@echo "SRC_DIRS: $(SRC_DIRS)"
