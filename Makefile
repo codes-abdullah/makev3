@@ -40,7 +40,8 @@ CPPFLAGS ?= $(INCLUDE_DIR_FLAGS) -MMD -MP
 all: $(TARGET) | FINALLY
 
 FINALLY: ECLIPSE_IDE_REQUIREMENTS
-	mv $(OBJ_DIR) $(BUILD_DIR)	
+	$(shell rm -r $(BUILD_DIR)/$(OBJ_DIR_NAME))
+	mv -f $(OBJ_DIR) $(BUILD_DIR)
 
 #special impelementation, tested on eclipse Version: 2024-06 (4.32.0)
 #eclipse will be looking for 2 dirs for running and debugging the app
@@ -76,7 +77,7 @@ $(OBJ_DIR)/%.cpp.o: $(SRC_DIR)/%.cpp
 	mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
-$(BUILD_DIR) $(OBJ_DIR):
+$(BUILD_DIR):
 	mkdir -p $@
 
 .PHONY: all clean
